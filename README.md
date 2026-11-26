@@ -1,3 +1,3 @@
-If a challenge needs to be built, it can be built by running `./build.sh`.
+If a challenge needs to be built, it can be built by running `./build.sh` or `python3 build.py`.
 
 Hosted challenges will contain a `challenge.yaml` file and can be run locally by following the [kCTF Local Testing Walkthrough](https://google.github.io/kctf/local-testing.html). Simply copy the challenge directory into `ctf-directory`, switch your current directory to the challenge directory, run `./build.sh` if present, run `kctf chal start`, and run `kctf chal debug port-forward &`. For web challenges, you may need to specify a new port for `kctf chal debug port-forward &`, depending on the port used in `challenge.yaml`. Also, you may need to change `HTTPS` to `HTTP` in `challenge.yaml`.
