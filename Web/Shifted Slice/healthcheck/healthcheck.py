@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+"""KCTF sidecar: periodically verify the complete intended solve."""
+
+import sys
+import threading
+import time
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
+
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE if (HERE / "solve.py").exists() else HERE.parent / "solution"))
+from solve import solve  # noqa: E402
+
+EXPECTED_FLAG = (HERE / "flag.txt" if (HERE / "flag.txt").exists() else HERE.parent / "flag.txt").read_text().strip()
+healthy = False
+
+
+def probe():
+    global healthy
+    while True:
+        try:
+            healthy = solve("http://127.0.0.1:8080") == EXPECTED_FLAG
+        except Exception as error:
+            healthy = False
+            print(f"healthcheck failed: {error}", flush=True)
+        time.sleep(30)
+
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        status = 404 if self.path != "/healthz" else 200 if healthy else 503
+        body = b"ok" if status == 200 else b"err"
+        self.send_response(status)
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def log_message(self, format, *args):
+        pass
+
+
+if __name__ == "__main__":
+    threading.Thread(target=probe, daemon=True).start()
+    HTTPServer(("0.0.0.0", 45281), Handler).serve_forever()

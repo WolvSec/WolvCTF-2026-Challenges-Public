@@ -1,0 +1,8 @@
+services:
+  web:
+    build: ./challenge
+    ports:
+      - "8080:1337"
+    tmpfs:
+      - /tmp
+    restart: unless-stopped

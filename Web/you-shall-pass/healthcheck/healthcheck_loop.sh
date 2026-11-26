@@ -1,0 +1,18 @@
+#!/bin/bash
+set -euo pipefail
+
+TIMEOUT=20
+PERIOD=30
+
+while true; do
+  echo -n "[$(date)] "
+
+  if timeout "${TIMEOUT}" /home/user/healthcheck.py; then
+    echo 'ok' | tee /tmp/healthz
+  else
+    echo -n "$? "
+    echo 'err' | tee /tmp/healthz
+  fi
+  sleep "${PERIOD}"
+  
+done

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f0e8">
+  <meta name="description" content="A field guide to the giants, sprinters, and feathered oddballs of the Jurassic Period.">
+  <title>Jurassic Field Notes — Ancient Earth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Ancient Earth home"><span class="wordmark-mark">A<span>.</span></span> ANCIENT EARTH</a>
+    <nav aria-label="Main navigation">
+      <a href="#field-notes">Field notes</a>
+      <a href="#about">About</a>
+    </nav>
+    <a class="header-note" href="#field-notes"><span class="live-dot"></span> A little before our time</a>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span>01</span> A JURASSIC FIELD GUIDE</p>
+        <h1 id="hero-title">Jurassic<br>was <em>wild.</em></h1>
+        <p class="hero-description">Step into a world of fern forests, soaring giants, and feathered hunters. These are the remarkable creatures of the Jurassic Period.</p>
+        <a class="round-link" href="#field-notes"><span>Explore the collection</span><span class="arrow">↘</span></a>
+      </div>
+      <div class="hero-art">
+        <img src="{{ url_for('static', filename='images/hero-dinosaur.jpg') }}" alt="A dinosaur fossil displayed in a museum gallery." onerror="this.hidden=true">
+        <div class="hero-placeholder" aria-hidden="true">
+          <div class="sun"></div><div class="ridge ridge-back"></div><div class="ridge ridge-front"></div>
+          <div class="dino-shape"><span class="dino-tail"></span><span class="dino-body"></span><span class="dino-neck"></span><span class="dino-head"></span><span class="dino-leg leg-one"></span><span class="dino-leg leg-two"></span></div>
+          <span class="photo-label">FIELD IMAGE · 001</span>
+        </div>
+        <div class="hero-caption"><span>THE JURASSIC PERIOD</span><span>201 — 145 MILLION YEARS AGO</span></div>
+        <div class="hero-stamp">JURASSIC<br>WORLD<br><span>•</span> FIELD NOTES</div>
+      </div>
+      <div class="hero-index">FIELD<br>NOTES<br><span>№ 01—06</span></div>
+    </section>
+
+    <section class="intro-strip" id="about">
+      <span class="strip-label">FIELD NOTE · JURASSIC</span>
+      <p>For 56 million years, dinosaurs made this world their own.<br><span>Meet a few of the locals from the Age of Giants.</span></p>
+      <span class="strip-mark">✳</span>
+    </section>
+
+    <section class="collection" id="field-notes" aria-labelledby="collection-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow"><span>02</span> JURASSIC NEIGHBORS</p>
+          <h2 id="collection-title">Meet the <em>locals.</em></h2>
+        </div>
+        <p class="section-aside">Six Jurassic standouts<br>from the neighborhood.</p>
+      </div>
+
+      <div class="dino-grid">
+        {% for dino in dinosaurs %}
+        <article class="dino-card {{ dino.class }}">
+          <a class="card-image" href="#{{ dino.name|replace(' ', '-')|lower }}" aria-label="Read about {{ dino.name }}">
+            <img src="{{ url_for('static', filename=dino.image) }}" alt="{{ dino.alt }}" loading="lazy" onerror="this.hidden=true">
+            <div class="image-placeholder" aria-hidden="true"><span class="placeholder-number">0{{ loop.index }}</span><span class="placeholder-title">PHOTO<br>GOES HERE</span><span class="placeholder-hint">{{ dino.name|upper }}</span><span class="placeholder-cross">＋</span></div>
+            <span class="card-arrow">↗</span>
+          </a>
+          <div class="card-meta"><span>{{ dino.kind }}</span><span>№ 0{{ loop.index }}</span></div>
+          <h3 id="{{ dino.name|replace(' ', '-')|lower }}">{{ dino.name }}</h3>
+          <p class="card-period">{{ dino.period }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="closing-note">
+      <span class="closing-star">✳</span>
+      <p>WELCOME TO THE<br><em>JURASSIC.</em></p>
+      <a href="#top">BACK TO THE BEGINNING <span>↑</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="wordmark" href="#top"><span class="wordmark-mark">A<span>.</span></span> ANCIENT EARTH</a>
+    <span>MADE FOR THE CURIOUS · 201—145 MILLION YEARS AGO</span>
+    <span>© JURASSIC FIELD NOTES</span>
+  </footer>
+</body>
+</html>

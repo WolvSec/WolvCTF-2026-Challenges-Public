@@ -1,0 +1,9 @@
+services:
+  approved-ish:
+    build: ./challenge
+    ports:
+      - "8000:8000"
+    environment:
+      # Set to "1" when the challenge is served over HTTPS.
+      COOKIE_SECURE: "0"
+    restart: unless-stopped

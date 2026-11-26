@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Approved-ish · Dataset releases</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="/">Approved<span>-ish</span></a><span class="tag">DATASET RELEASE DESK</span></header>
+  <main>
+    <section class="hero">
+      <div><p class="eyebrow">FROM EXPERIMENT TO RELEASE</p><h1>Your next dataset.<br>Ready for sign-off.</h1>
+        <p class="intro">Organize data references, review a manifest, and ship a training snapshot.</p></div>
+      <div class="workspace"><span class="eyebrow">YOUR WORKSPACE</span><p id="workspace-id">No active workspace</p>
+        <p id="expiry">Start a private workspace to begin. Workspaces last up to six hours and may reset during maintenance. New workspaces may be unavailable at capacity.</p>
+        <button id="start">Create workspace</button><button id="refresh" class="secondary" hidden>Refresh</button></div>
+    </section>
+    <p id="notice" role="status" aria-live="polite">Create a workspace to access the release desk.</p>
+    <div id="desk" hidden>
+      <section class="panel"><div class="section-title"><h2><span>01</span> Data catalog</h2><p>Metadata is visible to all members. Evaluation data requires curator access.</p></div><div id="shards" class="cards"></div></section>
+      <div class="columns">
+        <section class="panel"><h2><span>02</span> Aliases</h2><p>Keep a stable reference while your source data evolves.</p>
+          <form id="alias-form"><label for="new-target">Target shard</label><div class="inline"><select id="new-target"></select><button>Create alias</button></div></form>
+          <div id="aliases" class="rows"></div>
+        </section>
+        <section class="panel"><h2><span>03</span> Manifests</h2><p>Select aliases to compose a dataset. Approved manifests and their aliases are locked for release.</p>
+          <form id="manifest-form"><fieldset><legend>Include aliases</legend><div id="alias-options"></div></fieldset><button>Create manifest</button></form>
+          <div id="manifests" class="rows"></div>
+        </section>
+      </div>
+      <div class="columns bottom">
+        <section class="panel"><h2>Workspace maintenance</h2><p>Back up alias mappings as JSON. Restore existing aliases into the same workspace; manifests are managed separately. Legacy backups may use different casing for alias IDs.</p>
+          <button id="backup" class="secondary">Export alias backup</button>
+          <label for="backup-json">Alias backup JSON</label><textarea id="backup-json" rows="8" spellcheck="false" placeholder="Export a backup to inspect or restore its mappings."></textarea>
+          <button id="restore" class="secondary">Restore aliases</button>
+        </section>
+        <section class="panel"><h2>Activity</h2><p>Results from your most recent operation.</p><pre id="activity" tabindex="0">Ready.</pre></section>
+      </div>
+    </div>
+    <footer>Approved-ish / Research data operations <span>WolvCTF 2026</span></footer>
+  </main>
+</body>
+</html>

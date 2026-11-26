@@ -1,0 +1,23 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --tag=${_REGION}-docker.pkg.dev/$PROJECT_ID/desync-delivery/gateway:${_TAG}
+      - ./gateway
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --tag=${_REGION}-docker.pkg.dev/$PROJECT_ID/desync-delivery/edge:${_TAG}
+      - ./edge
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --tag=${_REGION}-docker.pkg.dev/$PROJECT_ID/desync-delivery/backend:${_TAG}
+      - ./backend
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/desync-delivery/gateway:${_TAG}
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/desync-delivery/edge:${_TAG}
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/desync-delivery/backend:${_TAG}
+substitutions:
+  _REGION: us-east5
+  _TAG: v3

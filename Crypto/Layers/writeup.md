@@ -1,0 +1,1 @@
+Equals sign reveals base64 encoding was implemented most recently. After unwrapping that layer the format of the text will indicate that it is in hex format and must be decoded hex to ASCII. The remaining text will have the dashes indicating that the last cipher is a simple substitution cipher.

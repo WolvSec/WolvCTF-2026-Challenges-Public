@@ -1,0 +1,7 @@
+/challenge/flag.txt
+/healthcheck/flag.txt
+/healthcheck/solve.py
+/dis.tar.gz
+__pycache__/
+*.py[cod]
+.DS_Store

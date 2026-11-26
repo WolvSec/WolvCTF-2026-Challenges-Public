@@ -1,0 +1,11 @@
+FROM python:3.12-alpine
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+WORKDIR /app
+COPY server.py /app/server.py
+
+ENV LISTEN_PORT=8080
+EXPOSE 8080
+USER 10001:10001
+CMD ["python", "/app/server.py"]

@@ -1,0 +1,77 @@
+name: desync-delivery
+
+services:
+  gateway:
+    build: ./gateway
+    image: desync-delivery-gateway:local
+    ports:
+      - "8080:8080"
+    environment:
+      EDGE_HOST: edge
+      EDGE_PORT: "8081"
+    depends_on:
+      - edge
+    restart: unless-stopped
+    cpus: 0.25
+    mem_limit: 256m
+    pids_limit: 128
+    networks:
+      - ingress
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  edge:
+    build: ./edge
+    environment:
+      BACKEND_HOST: backend
+      BACKEND_PORT: "5000"
+      LISTEN_PORT: "8081"
+    expose:
+      - "8081"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    cpus: 0.25
+    mem_limit: 256m
+    pids_limit: 128
+    networks:
+      - ingress
+      - app
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  backend:
+    build: ./backend
+    environment:
+      LISTEN_PORT: "5000"
+      FLAG_FILE: /run/secrets/flag.txt
+    volumes:
+      - ../flag.txt:/run/secrets/flag.txt:ro
+    restart: unless-stopped
+    cpus: 0.25
+    mem_limit: 256m
+    pids_limit: 128
+    expose:
+      - "5000"
+    networks:
+      - app
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+networks:
+  ingress:
+  app:
+    internal: true

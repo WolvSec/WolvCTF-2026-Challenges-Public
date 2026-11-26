@@ -1,0 +1,37 @@
+apiVersion: kctf.dev/v1
+kind: Challenge
+metadata:
+  name: approved-ish
+spec:
+  deployed: true
+  powDifficultySeconds: 0
+  network:
+    public: true
+    ports:
+    - protocol: HTTPS
+      targetPort: 8000
+  healthcheck:
+    enabled: true
+    image: kind/healthcheck
+  image: kind/challenge
+  podTemplate:
+    template:
+      spec:
+        securityContext:
+          fsGroup: 10001
+        containers:
+        - name: challenge
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          volumeMounts:
+          - name: approved-data
+            mountPath: /data
+        volumes:
+        - name: approved-data
+          emptyDir:
+            sizeLimit: 256Mi

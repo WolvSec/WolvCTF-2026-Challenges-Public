@@ -1,0 +1,5 @@
+# A Very Meta CTF
+
+The player handout is `dist.tar.gz`: `description.md` and the ten PNGs in `pictures/`. Each PNG has a hex string in its EXIF `UserComment`. Read the comments in alphabetical filename order, concatenate the hex, and decode it as ASCII. `python3 Solution/solve.py` performs this extraction from the actual images and prints the flag without modifying files. `python3 build.py` recreates the handout byte for byte from tracked player files and refuses metadata that no longer decodes to the organizer flag.
+
+**Design decision:** the tracked `main` Mach-O arm64 executable is an organizer-side metadata encoder. It requires a plaintext argument and `exiftool`, mutates images, has no supplied source/build recipe, and is not required to solve. The player archive intentionally excludes it and all `Solution/` files. The player challenge is now PNG metadata discovery and filename ordering. That direct route is likely easier than the issue's current Medium label; organizers should reassess the difficulty before release.

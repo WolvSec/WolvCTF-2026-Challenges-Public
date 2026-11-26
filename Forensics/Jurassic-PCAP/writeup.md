@@ -1,0 +1,3 @@
+After extracting `jurassic.pcap` from `dist.tar.gz`, you can load it into Wireshark and download all the images files through `File → Export Objects → HTTP`. Then, using the RockYou wordlist, you can run `stegseek archaeopteryx.jpg rockyou.txt flag.txt` to obtain the flag. If you run, `steghide extract -sf stegosaurus.jpg -p ''` you will obtain a hint in `hint.txt` stating, "Close, the flag is flown high." This is a reference to `archaeopteryx.jpg` because it is the only flying creature among the several images.
+
+Instead of using Wireshark, You can run `python3 extract.py dist.tar.gz extracted` to extract the two stego JPEGs into the directory `extracted`.

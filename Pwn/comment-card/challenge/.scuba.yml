@@ -1,0 +1,6 @@
+image: gcc:9.3.0@sha256:3afdc4312da6e714a2127f1a39526943a6e82c6ff6ebe68caa02a75cf35c5fbf
+
+aliases:
+  build:
+    script:
+      - gcc vuln.c -no-pie -z execstack -z now -fno-stack-protector -w -o chal
